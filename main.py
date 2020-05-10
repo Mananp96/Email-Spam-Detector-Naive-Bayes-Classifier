@@ -40,5 +40,15 @@ def main():
     console.log("storing the vocabulary in "+VOCABULARY_DOCUMENT)
     fileProcessor.storeVocabulary(VOCABULARY_DOCUMENT, textProcessor.getVocabulary())
 
+    totalTrainDocs, totalHamDocs, totalSpamDocs = fileProcessor.getNumOfDocuments(trainFiles)
+
+    # Train Classifier on Vocabulary
+    console.log("\ncreating NaiveBayesClassifier Model")
+    naiveBayesClassifier = NaiveBayesClassifier()
+    console.log("feeding vocabulary to classifier")
+    naiveBayesClassifier.fit(textProcessor.getVocabulary())
+    naiveBayesClassifier.setPriorHam(totalTrainDocs, totalHamDocs)
+    naiveBayesClassifier.setPriorSpam(totalTrainDocs, totalSpamDocs)
+
 if __name__ == "__main__":
     main()
