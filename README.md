@@ -66,3 +66,11 @@ Considering SPAM as a positive class and HAM as the negative class:
 |------------------|--------------------|-------------------|
 | SPAM (Actual)    |       TP = 336     |       FN = 64     |
 | HAM (Actual)     |       FP =   6     |       TN = 394    |
+
+Accuracy:  0.9125
+
+Precision: 0.9824561403508771
+
+Recall:    0.84
+
+f1-measure: 0.9056603773584906
