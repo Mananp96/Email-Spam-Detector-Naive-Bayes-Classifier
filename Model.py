@@ -41,6 +41,18 @@ class NaiveBayesClassifier:
         return self.result
     
     '''
+    Add classification result as,
+    
+    {
+        test-ham-00001.txt: [ham, 0.004, 0.001, ham, right]
+        test-ham-00002.txt: [spam, 0.002, 0.03, ham, wrong] 
+    }
+
+    '''
+    def addClassificationResult(self, document, predictedClass, scoreHam, scoreSpam, actualClass, label):
+        self.result[document] = [predictedClass, scoreHam, scoreSpam, actualClass, label]
+
+    '''
     Method that predicts class for given document
     '''
     def predict(self, document, actualClass, words):
@@ -65,6 +77,9 @@ class NaiveBayesClassifier:
             label = RIGHT
         else:
             label = WRONG
+        
+        self.addClassificationResult(document, predictedClass, scoreHam, scoreSpam, actualClass, label)
+
     
 
     

@@ -66,6 +66,10 @@ def main():
 
             finally:
                 f.close()
+ 
+    # Get the Classification result and store it in a file
+    fileProcessor.storeClassificationResult(RESULT_DOCUMENT, naiveBayesClassifier.getClassificationResult())
+    console.log("\nclassification done, result stored at "+RESULT_DOCUMENT)
 
 if __name__ == "__main__":
     main()
