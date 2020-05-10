@@ -50,5 +50,22 @@ def main():
     naiveBayesClassifier.setPriorHam(totalTrainDocs, totalHamDocs)
     naiveBayesClassifier.setPriorSpam(totalTrainDocs, totalSpamDocs)
 
+    # Run Classifier on Test documents
+    console.log("running the classifier on test documents")
+    for file in testFiles:
+            try:
+                with open(str(TEST_DOCUMEMENTS+file), "r", encoding="utf8", errors='ignore') as f:
+                    classType = fileProcessor.getClassType(f)
+                    wordsList = []
+
+                    for line in f:
+                        line = line.strip()
+                        wordsList.extend(textProcessor.getWordsFromDocument(textProcessor.tokenize(line)))
+                    
+                    naiveBayesClassifier.predict(file, classType, wordsList)
+
+            finally:
+                f.close()
+
 if __name__ == "__main__":
     main()

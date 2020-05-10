@@ -40,6 +40,32 @@ class NaiveBayesClassifier:
     def getClassificationResult(self):
         return self.result
     
+    '''
+    Method that predicts class for given document
+    '''
+    def predict(self, document, actualClass, words):
+        scoreHam = self.getPriorHam()
+        scoreSpam = self.getPriorSpam()
+        predictedClass = ''
+        label = ''
+
+        for word in words:
+            if word in self.vocabulary:
+                hamProb = self.vocabulary[word][1]
+                spamProb = self.vocabulary[word][3]
+                scoreHam += math.log10(hamProb)
+                scoreSpam += math.log10(spamProb)
+        
+        if scoreHam > scoreSpam:
+            predictedClass = HAM
+        else:
+            predictedClass = SPAM
+        
+        if predictedClass == actualClass:
+            label = RIGHT
+        else:
+            label = WRONG
+    
 
     
         
