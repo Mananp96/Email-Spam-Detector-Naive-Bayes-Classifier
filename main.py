@@ -71,5 +71,13 @@ def main():
     fileProcessor.storeClassificationResult(RESULT_DOCUMENT, naiveBayesClassifier.getClassificationResult())
     console.log("\nclassification done, result stored at "+RESULT_DOCUMENT)
 
+    # Print confusion matrix and other Perfomance Measures
+    console.log("printing the perfomance measures")
+    naiveBayesClassifier.printConfusionMatrix()
+    print("Accuracy measure:  "+ str(naiveBayesClassifier.getAccuracy())+ "\n" )
+    print("Precision measure: "+ str(naiveBayesClassifier.getPrecision())+ "\n"  )
+    print("recall measure:    "+ str(naiveBayesClassifier.getRecall())+ "\n"  )
+    print("f1-measure:        "+ str(naiveBayesClassifier.getF1Measure())+ "\n"  )
+
 if __name__ == "__main__":
     main()

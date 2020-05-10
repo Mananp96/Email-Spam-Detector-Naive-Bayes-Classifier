@@ -63,6 +63,6 @@ python main.py
 Considering SPAM as a positive class and HAM as the negative class:
 
 |                  | SPAM (Predicted)   | HAM (Predicted)   |
-|------------------|-----------------|----------------|
-| SPAM (Actual) |       TP = 336      |        FN = 64      |
-| HAM (Actual)  |       FP =   6      |       TN = 394      |
+|------------------|--------------------|-------------------|
+| SPAM (Actual)    |       TP = 336     |       FN = 64     |
+| HAM (Actual)     |       FP =   6     |       TN = 394    |
