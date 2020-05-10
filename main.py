@@ -33,5 +33,12 @@ def main():
     console.log("processing train documents")
     fileProcessor.processFiles(trainFiles, TRAIN_DOCUMENTS, textProcessor)
 
+    # Build the Vocabulary of words from training documents
+    console.log("building vocabulary")
+    textProcessor.buildVocabulary()
+    # Get the Vocabulary and Store it in a file
+    console.log("storing the vocabulary in "+VOCABULARY_DOCUMENT)
+    fileProcessor.storeVocabulary(VOCABULARY_DOCUMENT, textProcessor.getVocabulary())
+
 if __name__ == "__main__":
     main()

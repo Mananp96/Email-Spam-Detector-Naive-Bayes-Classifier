@@ -11,6 +11,7 @@ class TextProcessor:
         self.word_frequency = {}
         self.words_Ham = {}
         self.words_Spam = {}
+        self.vocabulary = {}
         self.Delta = 0.5
         self.sizeOfHam = 0
         self.sizeOfSpam = 0
@@ -112,6 +113,73 @@ class TextProcessor:
     def getWordsSpam(self):
         return self.words_Spam
     
+    '''
+    Returns vocabulary created from Train data
+    '''
+    def getVocabulary(self):
+        return self.vocabulary
+    
+    '''
+    Add Word and it's result in Vocabulary
+    
+    where;
+    word = unique word
+    result =  [3, 0.003, 40, 0.4]
+            where; result is a list
+                index 0: The frequency of word in the class ham
+                index 1: The smoothed conditional probability of word in the class ham, P(word | ham)
+                index 2: The frequency of word in the class spam
+                index 3: The smoothed conditional probability of word in spam, P(word | spam)
+    '''
+    def setVocabulary(self, word, result):
+        self.vocabulary[word] = result
+
+    def setFreqHam(self, word, value):
+        self.vocabulary.get(word, "")[0] = value
+
+    def setFreqSpam(self, word, value):
+        self.vocabulary.get(word, "")[2] = value
+        pass
+
+    def setConditinalProbHam(self, word, value):
+        self.vocabulary.get(word, "")[1] = value
+
+    def setConditinalProbSpam(self, word, value):
+        self.vocabulary.get(word, "")[3] = value
+    
+    '''
+    build sorted vocabulary from created word dictionaries
+    '''
+    def buildVocabulary(self):
+        self.sizeOfCorpus = len(self.word_frequency)
+        self.sizeOfHam = sum(self.words_Ham.values())
+        self.sizeOfSpam = sum(self.words_Spam.values())
+
+        sortedCorpus = sorted(self.word_frequency.keys(), key=lambda x:x.lower())
+
+        for key in sortedCorpus:
+            value = self.word_frequency[key]
+            self.setVocabulary(key, [0, 0.0, 0, 0.0])
+
+            if key in self.words_Ham:
+                self.setFreqHam(key, self.words_Ham[key])
+                probability = self.calculateCondProb(self.words_Ham[key], 'ham')
+                self.setConditinalProbHam(key, probability)
+            else:
+                self.setFreqHam(key, 0)
+                probability = self.calculateCondProb(0, 'ham')
+                self.setConditinalProbHam(key, probability)
+                
+            if key in self.words_Spam:
+                self.setFreqSpam(key, self.words_Spam[key])
+                probability = self.calculateCondProb(self.words_Spam[key], 'spam')
+                self.setConditinalProbSpam(key, probability)
+            else:
+                self.setFreqSpam(key, 0)
+                probability = self.calculateCondProb(0, 'spam')
+                self.setConditinalProbSpam(key, probability)
+
+    
 '''
 FileProcessor class which reads and processes files
 '''
@@ -179,6 +247,57 @@ class FileProcessor:
 
             finally:
                 f.close()
+
+    '''
+    Store Vocabulary in given file
+    Following the format: 
+        1 abc 3 0.003 40 0.4
+        2 airplane 3 0.003 40 0.4
+        3 password 40 0.4 50 0.03
+        4 zucchini 0.7 0.003 0 0.000001
+
+        where; each word is seperated by two spaces,
+        and followed by carriage return at the end of line
+    '''
+    def storeVocabulary(self, file, vocabulary):
+        try:
+            with open(file, "w") as f:
+                lineNum = 0
+                for key, value in vocabulary.items():
+                    lineNum += 1
+                    lineString = (str(lineNum) + self.space 
+                    + str(key) + self.space
+                    + str(value[0]) + self.space 
+                    + str(value[1]) + self.space 
+                    + str(value[2]) + self.space 
+                    + str(value[3]) + "\r")
+
+                    f.write(lineString)
+
+        finally:
+            f.close()
+
+    '''
+    Store Classification Results in given file
+    '''
+    def storeClassificationResult(self, file, result):
+        try:
+            with open(file, "w") as f:
+                lineNum = 0
+                for key, value in result.items():
+                    lineNum += 1
+                    lineString = (str(lineNum) + self.space 
+                    + str(key) + self.space
+                    + str(value[0]) + self.space 
+                    + str(value[1]) + self.space 
+                    + str(value[2]) + self.space 
+                    + str(value[3]) + self.space 
+                    + str(value[4]) +"\r")
+
+                    f.write(lineString)
+
+        finally:
+            f.close()
    
     
 
