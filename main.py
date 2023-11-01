@@ -19,9 +19,9 @@ def main():
     fileProcessor = FileProcessor()
     
     # load train and test files
-    console.log("loading train files")
+    console.log("loading train files. . .")
     trainFiles = fileProcessor.loadDataFiles(TRAIN_DOCUMENTS)
-    console.log("loading test files")
+    console.log("loading test files . . .")
     testFiles = fileProcessor.loadDataFiles(TEST_DOCUMEMENTS)
     
     # Process each train documents
