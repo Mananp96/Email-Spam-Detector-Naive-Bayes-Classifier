@@ -64,13 +64,13 @@ Considering SPAM as a positive class and HAM as the negative class:
 
 |                  | SPAM (Predicted)   | HAM (Predicted)   |
 |------------------|--------------------|-------------------|
-| SPAM (Actual)    |       TP = 336     |       FN = 64     |
-| HAM (Actual)     |       FP =   6     |       TN = 394    |
+| SPAM (Actual)    |       TP = 1434    |       FN = 66     |
+| HAM (Actual)     |       FP =   7     |       TN = 1493   |
 
-Accuracy:  0.9125
+Accuracy:  0.9756666666666667
 
-Precision: 0.9824561403508771
+Precision: 0.9951422623178349
 
-Recall:    0.84
+Recall:    0.956
 
-f1-measure: 0.9056603773584906
+f1-measure: 0.9751785107106425
